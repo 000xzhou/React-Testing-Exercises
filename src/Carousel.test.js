@@ -1,10 +1,16 @@
-// import "@testing-library/jest-dom";
-// import { render, fireEvent } from "@testing-library/react";
 import { render, fireEvent } from "@testing-library/react";
-// import { render, fireEvent } from "@testing-library/jest-dom/extend-expect";
-
 import Carousel from "./Carousel";
 import TEST_IMAGES from "./_testCommon.js";
+
+it("renders without crashing", () => {
+  render(<Carousel photos={TEST_IMAGES} title="images for testing" />);
+});
+it("matches snapshot", function () {
+  const { asFragment } = render(
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
+  );
+  expect(asFragment()).toMatchSnapshot();
+});
 
 it("works when you click on the right arrow", function () {
   const { container } = render(
