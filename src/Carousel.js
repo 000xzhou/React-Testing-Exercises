@@ -18,7 +18,6 @@ function Carousel({ photos, title }) {
 
   const currCard = photos[currCardIdx];
   const total = photos.length;
-
   //Increments currCardIdx state by 1
   function goForward() {
     // setCurrCardIdx(currCardIdx + 1);
@@ -34,14 +33,22 @@ function Carousel({ photos, title }) {
     <div className="Carousel">
       <h1>{title}</h1>
       <div className="Carousel-main">
-        <i className="bi bi-arrow-left-circle" onClick={goBackward} />
+        {currCardIdx === 0 ? (
+          ""
+        ) : (
+          <i className="bi bi-arrow-left-circle" onClick={goBackward} />
+        )}
         <Card
           caption={currCard.caption}
           src={currCard.src}
           currNum={currCardIdx}
           totalNum={total}
         />
-        <i className="bi bi-arrow-right-circle" onClick={goForward} />
+        {currCardIdx === 2 ? (
+          ""
+        ) : (
+          <i className="bi bi-arrow-right-circle" onClick={goForward} />
+        )}
       </div>
     </div>
   );

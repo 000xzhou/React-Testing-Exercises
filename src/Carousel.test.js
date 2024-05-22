@@ -56,17 +56,39 @@ it(" goes back to 1st photo from 2nd photo", function () {
   ).toBeInTheDocument();
 });
 
-it("goes to last photo when clicking left arrow from 1st photo", function () {
+it("missing left arrow on 1st photo and right arrow on last photo", () => {
   const { container } = render(
     <Carousel photos={TEST_IMAGES} title="images for testing" />
   );
+  let leftArrow = container.querySelector(".bi-arrow-left-circle");
+  let rightArrow = container.querySelector(".bi-arrow-right-circle");
+  expect(leftArrow).not.toBeInTheDocument();
+  expect(rightArrow).toBeInTheDocument();
 
-  // move backward in the carousel
-  const leftArrow = container.querySelector(".bi-arrow-left-circle");
-  fireEvent.click(leftArrow);
+  // go to 2nd photo
+  fireEvent.click(rightArrow);
+  // go to 3rd photo (last for this)
+  fireEvent.click(rightArrow);
 
-  // expect the last image to show
-  expect(
-    container.querySelector('img[alt="testing image 3"]')
-  ).toBeInTheDocument();
+  // Update arrow queries
+  leftArrow = container.querySelector(".bi-arrow-left-circle");
+  rightArrow = container.querySelector(".bi-arrow-right-circle");
+
+  expect(rightArrow).not.toBeInTheDocument();
+  expect(leftArrow).toBeInTheDocument();
 });
+
+// it("goes to last photo when clicking left arrow from 1st photo", function () {
+//   const { container } = render(
+//     <Carousel photos={TEST_IMAGES} title="images for testing" />
+//   );
+
+//   // move backward in the carousel
+//   const leftArrow = container.querySelector(".bi-arrow-left-circle");
+//   fireEvent.click(leftArrow);
+
+//   // expect the last image to show
+//   expect(
+//     container.querySelector('img[alt="testing image 3"]')
+//   ).toBeInTheDocument();
+// });
